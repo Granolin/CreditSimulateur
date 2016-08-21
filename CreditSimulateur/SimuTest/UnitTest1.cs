@@ -13,6 +13,7 @@ namespace SimuTest
             int maxEmprunt = Calc.GetEmprunt(30, 3000, 2);
 
             Assert.AreEqual(maxEmprunt, 811646);
+
         }
     }
 }
