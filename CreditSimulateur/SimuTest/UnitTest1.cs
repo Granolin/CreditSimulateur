@@ -11,7 +11,9 @@ namespace SimuTest
         public void TestMethod1()
         {
             int maxEmprunt = Calc.GetEmprunt(30, 3000, 2);
+
             Assert.AreEqual(maxEmprunt, 811646);
+
         }
     }
 }
