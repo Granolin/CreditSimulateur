@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simu", "Simu\Simu.csproj", "{CACC3F6C-C6B4-4DCC-B7A4-2FBAC2502C0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimuTest", "SimuTest\SimuTest.csproj", "{09DC9B90-419D-464C-9BB1-8D361453EA32}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CACC3F6C-C6B4-4DCC-B7A4-2FBAC2502C0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CACC3F6C-C6B4-4DCC-B7A4-2FBAC2502C0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CACC3F6C-C6B4-4DCC-B7A4-2FBAC2502C0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CACC3F6C-C6B4-4DCC-B7A4-2FBAC2502C0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09DC9B90-419D-464C-9BB1-8D361453EA32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09DC9B90-419D-464C-9BB1-8D361453EA32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09DC9B90-419D-464C-9BB1-8D361453EA32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09DC9B90-419D-464C-9BB1-8D361453EA32}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

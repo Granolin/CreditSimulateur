@@ -1,0 +1,80 @@
+﻿@model Simu.Models.SimuInfos
+
+@{
+    System.Linq.Expressions.Expression<Func<Simu.Models.SimuInfos, int>> DelegateInt = null;
+    System.Linq.Expressions.Expression<Func<Simu.Models.SimuInfos, float>> DelegateFloat = null;
+
+    if (ViewData["Name"].ToString() == "Mensualite")
+    {
+        DelegateInt = (m => m.Mensualite);
+    }
+    else if (ViewData["Name"].ToString() == "Duree")
+    {
+        DelegateInt = (m => m.Duree);
+    }
+    else if (ViewData["Name"].ToString() == "Taux")
+    {
+        DelegateFloat = (m => m.Taux);
+    }
+    else if (ViewData["Name"].ToString() == "Emprunt")
+    {
+        DelegateInt = (m => m.Emprunt);
+    }
+    else if (ViewData["Name"].ToString() == "Apport")
+    {
+        DelegateInt = (m => m.Apport);
+    }
+    else if (ViewData["Name"].ToString() == "Total")
+    {
+        DelegateInt = (m => m.Total);
+    }
+    else if (ViewData["Name"].ToString() == "MontantBien")
+    {
+        DelegateInt = (m => m.MontantBien);
+    }
+}
+
+<div class="row" data-id=@ViewData["Id"].ToString()>
+
+    <div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
+        <button id=@("btnLock" + ViewData["Id"]) type="button" class="btn btn-default glyphicon glyphicon-ok lock" data-lock="0"></button>
+    </div>
+    <label class="control-label col-xs-6 col-sm-4 col-md-3 col-lg-2" for="txtDuree">@Html.Raw(ViewData["Label"].ToString()) :</label>
+    <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2" style="padding-right: 0px; padding-left: 0px;">
+        
+
+        @if (DelegateInt != null)
+        {
+            @Html.TextBoxFor(DelegateInt, new { id = "txt" + ViewData["Id"].ToString(), @class = "form-control texteSimu", style = "display:inline" })
+        }
+
+        @if (DelegateFloat != null)
+        {
+            @Html.TextBoxFor(DelegateFloat, new { id = "txt" + ViewData["Id"].ToString(), @class = "form-control texteSimu", style = "display:inline" })
+        }
+        <span class="Unite">
+            @if (ViewData["Format"].ToString() == "Amount")
+            {
+                @: €
+            }
+            else if (ViewData["Format"].ToString() == "Year")
+            {
+                @: ans
+            }
+            else if (ViewData["Format"].ToString() == "Percent")
+            {
+                @: %
+            }
+        </span>
+        
+    </div>
+    <div class="col-sm-4 col-md-6 col-lg-7 visible-sm visible-md visible-lg">
+        <div class="FondScale">
+            <div id=@("box" + ViewData["Id"].ToString()) class="ScaleNormal">
+                <div id=@("drag" + ViewData["Id"].ToString()) class="ui-widget-content draggable">
+                </div>
+            </div>
+        </div>
+    </div>
+    <i class="fa fa-home"></i>
+</div>

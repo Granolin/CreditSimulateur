@@ -1,0 +1,92 @@
+﻿.result{
+    color:darkorange;
+    font-size:x-large;
+}
+
+ .draggable {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    text-align: center;
+    background: #eea236 !important;
+}
+
+body {
+    font-size: 14px;
+}
+
+
+th {
+    text-align: left;
+}
+
+.form-horizontal .control-label {
+  text-align:left;
+}
+
+.scale {
+    padding-bottom:10px;
+}
+
+input[type="text"]
+{
+  text-align: right;
+  width:70px;
+  padding-left:2px;
+  padding-right:2px;
+}
+
+.minScale{
+    float:left;
+    font: 200 10px arial;
+    color:darkblue;
+}
+
+.maxScale{
+    float:right;
+    font: 200 10px arial;
+    color:darkblue;
+}
+
+.ScaleNormal{
+    background-color:#F5F6CE;
+    height:20px;
+    border:0px solid black;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.ScaleError{
+    background-color:crimson;
+    height:20px;
+    border:0px solid black;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+#btnTableauAmortissement{
+    margin-bottom:15px;
+}
+
+#AmoHeader{
+    background-color:#31b0d5;
+    text-align:right;
+}
+
+.lock{
+    float: right;
+    font-weight:bolder;
+}
+
+.FondScale {
+    background-color:#DDDDDD;
+    /*background: repeating-linear-gradient( 45deg,  #606dbc, #606dbc 10px, #465298 10px, #465298 20px );*/
+   /*repeating-linear-gradient(135deg, 
+   #000, #000 .25em /* black stripe , 
+   #c9302c 0, #c9302c .75em /* red stripe); */
+}
+
+.indic{
+    font-style: italic;
+    text-align:center;
+}

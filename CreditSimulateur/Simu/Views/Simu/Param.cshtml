@@ -1,0 +1,107 @@
+﻿@model Simu.Models.SimuParam
+
+@{
+    ViewBag.Title = "Paramétrage";
+}
+
+<h1>Paramétrage du simulateur de crédit immobilier</h1>
+
+    @using (Html.BeginForm("Param", "Simu", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <br />
+
+        <div class="jumbotron">
+
+            <table>
+                <tr>
+                    <th>Mensualité : </th>
+                    <td></td>
+                    <td>Entre</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.MinMensualite, new { @class = "form-control texteSimu", style = "display:inline" })
+                    </td>
+                    <td>€</td>
+                    <td> et </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.MaxMensualite, new { @class = "form-control texteSimu", style = "display:inline" })
+                    </td>
+                    <td>
+                        €
+                        @Html.ValidationMessageFor(m => m.MinMensualite)
+                        @Html.ValidationMessageFor(m => m.MaxMensualite)
+                    </td>
+                </tr>
+                <tr>
+                    <th>Durée :</th>
+                    <td></td>
+                    <td>Entre</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.MinDuree, new { @class = "form-control texteSimu", style = "display:inline" })
+                    </td>
+                    <td>ans&nbsp;</td>
+                    <td>et </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.MaxDuree, new { @class = "form-control texteSimu", style = "display:inline" })
+                    </td>
+                    <td>
+                        ans
+                        @Html.ValidationMessageFor(m => m.MinDuree)
+                        @Html.ValidationMessageFor(m => m.MaxDuree)
+                    </td>
+                </tr>
+                <tr>
+                    <th>Taux :</th>
+                    <td><label class=".radio-inline"><input type="radio" name="tauxType" checked></label></td>
+                    <td>Entre</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.MinTaux, new { @class = "form-control texteSimu", style = "display:inline" })
+                    </td>
+                    <td>%</td>
+                    <td> et </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.MaxTaux, new { @class = "form-control texteSimu", style = "display:inline" })
+                    </td>
+                    <td>
+                        %
+                        @Html.ValidationMessageFor(m => m.MinTaux)
+                        @Html.ValidationMessageFor(m => m.MaxTaux)
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><label class=".radio-inline"><input type="radio" name="tauxType" disabled></label></td>
+                    <td colspan="6">Table de correspondance durée/taux (à venir)</td>
+                </tr>
+                <tr>
+                    <th>Apport :</th>
+                    <td></td>
+                    <td>Entre</td>
+                    <td>
+                        @Html.TextBoxFor(m => m.MinApport, new { @class = "form-control texteSimu", style = "display:inline" })
+                    </td>
+                    <td>€</td>
+                    <td> et </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.MaxApport, new { @class = "form-control texteSimu", style = "display:inline" })
+                    </td>
+                    <td>
+                        €
+                        @Html.ValidationMessageFor(m => m.MinTaux)
+                        @Html.ValidationMessageFor(m => m.MaxTaux)
+                    </td>
+                </tr>
+                
+            </table>
+
+
+            @*Bouton Enregistrer*@
+            <button id="btnParametrage" type="submit" class="btn btn-lg btn-info">Enregistrer</button>
+
+        </div>
+    }
+
+
+    @section styles
+    {
+        @Styles.Render("~/Content/styleSimu")
+    }

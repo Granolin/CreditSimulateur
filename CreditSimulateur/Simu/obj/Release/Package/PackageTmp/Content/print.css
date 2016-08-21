@@ -1,0 +1,12 @@
+﻿@media print {
+
+    .jumbotron{
+        visibility:hidden;
+    }
+
+    #titlePage
+    {
+        visibility:hidden;
+    }
+}
+

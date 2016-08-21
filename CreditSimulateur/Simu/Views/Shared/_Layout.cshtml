@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="IDqGGFqpWHvYSNtP2hpjcSUczoJAp995KGZ1rrG_5xw" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @RenderSection("styles", required: false)
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink(" Crédit immobilier", "Immo", null, new { @class = "glyphicon glyphicon-home" })</li>
+                    <li>@Html.ActionLink(" Crédit consommation", "Conso", null, new { @class = "glyphicon glyphicon-eur" })</li>
+                    <li>@Html.ActionLink(" Contact", "Contact", null, new { @class = "glyphicon glyphicon-envelope" })</li>
+                </ul>
+               
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Dily</p>
+            <div class="container">
+                <div class="visible-lg"><span class="label label-default">lg</span></div> 
+                <div class="visible-md"><span class="label label-default">md</span></div> 
+                <div class="visible-sm"><span class="label label-default">sm</span></div> 
+                <div class="visible-xs"><span class="label label-default">xs</span></div>
+            </div>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-74322718-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+</body>
+</html>

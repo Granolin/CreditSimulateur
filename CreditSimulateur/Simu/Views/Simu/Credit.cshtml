@@ -1,0 +1,246 @@
+﻿@model Simu.Models.SimuInfos
+
+@{
+    if(ViewBag.TypeCredit != "Conso")
+    {
+        ViewBag.Title = "Simulation de crédit immobilier";
+    }
+    else
+    {
+        ViewBag.Title = "Simulation de crédit consommation";
+    }
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+
+@if (ViewBag.TypeCredit != "Conso")
+{
+    <h1 id="titlePage">Simulateur de crédit immobilier</h1>
+}
+else
+{
+    <h1 id="titlePage">Simulateur de crédit consommation</h1>
+}
+
+
+<form class="form-horizontal" role="form">
+
+    @*Paramétrage*@
+    <div class="form-group">
+        <div class="jumbotron">
+
+            @Html.Partial("~/Views/Simu/Scale.cshtml", Model, new ViewDataDictionary() { { "Name", "Mensualite" }, { "Label", "Mensualité" }, { "Min", @SessionManager.MinMensualite }, { "Max", SessionManager.MaxMensualite }, { "Format", "Amount" }, { "Id", 0 } })
+            @Html.Partial("~/Views/Simu/Scale.cshtml", Model, new ViewDataDictionary() { { "Name", "Duree" }, { "Label", "Durée" }, { "Min", @SessionManager.MinDuree }, { "Max", SessionManager.MaxDuree }, { "Format", "Year" }, { "Id", 1 } })
+            @Html.Partial("~/Views/Simu/Scale.cshtml", Model, new ViewDataDictionary() { { "Name", "Taux" }, { "Label", "Taux <br />(assurance incluse)" }, { "Min", @SessionManager.MinTaux }, { "Max", SessionManager.MaxTaux }, { "Format", "Percent" }, { "Id", 2 } })
+            @Html.Partial("~/Views/Simu/Scale.cshtml", Model, new ViewDataDictionary() { { "Name", "Emprunt" }, { "Label", "Emprunt" }, { "Min", @SessionManager.MinEmprunt }, { "Max", SessionManager.MaxEmprunt }, { "Format", "Amount" }, { "Id", 3 } })
+
+            <button id="btnEcart" type="button" class="btn btn-warning" style="display:none"></button>
+
+            <div id="lblMontantHorsLimites" class="alert alert-danger" style="display:none">
+                Montant Hors limites.
+            </div>
+
+            @if (ViewBag.TypeCredit != "Conso")
+            {
+                <hr />
+            }
+
+            <div style="display:@(ViewBag.TypeCredit == "Conso" ? "none" : "inline")">
+                @Html.Partial("~/Views/Simu/Scale.cshtml", Model, new ViewDataDictionary() { { "Name", "Apport" }, { "Label", "Apport" }, { "Min", @SessionManager.MinApport }, { "Max", SessionManager.MaxApport }, { "Format", "Amount" }, { "Id", 4 } })
+            </div>
+
+            @if (ViewBag.TypeCredit != "Conso")
+            {
+                <hr />
+            }
+
+            <div style="display:@(ViewBag.TypeCredit == "Conso" ? "none" : "inline")">
+
+                @* Total *@
+                @Html.Partial("~/Views/Simu/Scale.cshtml", Model, new ViewDataDictionary() { { "Name", "Total" }, { "Label", "Total" }, { "Min", @SessionManager.MinTotal }, { "Max", SessionManager.MaxTotal }, { "Format", "Amount" }, { "Id", 5 } })
+
+            </div>
+
+            <div style="display:@(ViewBag.TypeCredit == "Conso" ? "none" : "inline")">
+
+                @* Type *@
+                <div class="row">
+                    <label class="control-label col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xs-offset-2 col-sm-offset-1 col-md-offset-1 col-lg-offset-1" for="ancienNeuf">Type :</label>
+                    <div class="col-lg-9">
+                        <label class=".radio-inline"><input id="chkAncien" type="radio" name="ancienNeuf" class="ancienNeuf" checked>Ancien</label>
+                        <label class=".radio-inline"><input id="chkNeuf" type="radio" name="ancienNeuf" class="ancienNeuf">Neuf</label>
+                    </div>
+                </div>
+
+                @* Frais de notaire *@
+                <div class="row">
+                    <label class="control-label col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xs-offset-2 col-sm-offset-1 col-md-offset-1 col-lg-offset-1" for="ancienNeuf">Frais de notaire :</label>
+                    <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2" style="padding-left:0px; padding-right:0px">
+                        <span id="lblFraisNotaire">@Model.FraisNotaireFormat €</span>
+                    </div>
+                </div>
+
+                @* Montant du bien *@
+                @Html.Partial("~/Views/Simu/Scale.cshtml", Model, new ViewDataDictionary() { { "Name", "MontantBien" }, { "Label", "Montant du bien" }, { "Min", @SessionManager.MinMontantBien }, { "Max", SessionManager.MaxMontantBien }, { "Format", "Amount" }, { "Id", 6 } })
+
+                </div>
+
+            <br />
+
+            @*Tableau d'amortissement*@
+            <div class="row">
+                <div class="col-xs-4 col-sm-3 col-md-2 col-lg-4">
+                    <button id="btnTableauAmortissement" type="button" class="btn btn-lg btn-primary" data-target="#TableauAmo" data-toggle="modal">Tableau d'amortissement</button>
+                </div>
+            </div>
+
+            <div class="row indic">
+                Tous les montants sont donnés à titre indicatif.
+            </div>
+        </div>
+    </div>
+</form>
+
+<div id="TableauAmo" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="AmoModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Tableau d'amortissement</h4>
+            </div>
+            <div class="modal-body" id="TabAmo">
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="debug"></div>
+
+
+@if (ViewBag.TypeCredit != "Conso")
+{
+    <h2>Qu'est ce que le taux effectif global ?</h2>
+    <p>
+        <blockquote>
+            Le taux effectif global (TEG), ou taux annuel effectif global (TAEG), est le taux d'intérêt fixé par la banque ou l'établissement de crédit. Il vous permet d'évaluer le coût total de votre crédit quand vous souscrivez un crédit immobilier ou un crédit à la consommation.
+        </blockquote>
+
+        <a href="https://www.service-public.fr/particuliers/vosdroits/F2456">Service Public - TEG</a>
+
+    </p>
+
+    <h2>De quoi se composent les frais de notaire ?</h2>
+    <p>
+        <blockquote>
+            Les frais de notaire se décomposent de la façon suivante :
+            <ul>
+                <li>Les droits et taxes payés au Trésor Public</li>
+                <li>Les émoluments du notaire</li>
+                <li>Les honoraires du notaire</li>
+                <li>Les débours</li>
+            </ul>
+        </blockquote>
+        <a href="https://fr.wikipedia.org/wiki/Frais_de_notaire">Wikipédia - Frais de Notaire</a>
+
+
+        <blockquote>
+            Pour ce simulateur nous utilisons la formule simpliée suivante pour un achat dans l'ancien :
+
+            <strong>Prix de vente * 6,88% + 1493,5</strong>
+
+            <br />
+            Pour un achat dans le neuf les frais de notaire sont calculés de la façon suivante :
+
+            <strong>Prix de vente * 3%</strong>
+
+        </blockquote>
+
+        <a href="https://www.mystone.fr/frais-de-notaires-ancien/">MyStone.fr - Calcul des frais de notaires dans l'ancien</a>
+        <br />
+        <a href="https://www.service-public.fr/particuliers/vosdroits/R16181">Service-public.fr - Simulateur de calcul des frais de notaire</a>
+    </p>
+
+    <h2>Qu'est-ce que le taux d'usure ?</h2>
+    <p>
+        <blockquote>
+            C'est le taux maximal effectif s'appliquant aux opérations de prêt.
+            <br />
+            Il est fixé à 133 % du taux effectif moyen pratiqué au cours du trimestre précédent par les établissements de crédit pour des opérations de même nature comportant des risques analogues.
+            <br />
+            Publié trimestriellement par la Banque de France, il comprend plus d'une dizaine de catégories d'opérations et concerne la plupart des prêts aux entreprises, ainsi que quasiment tous les prêts aux particuliers : prêts immobiliers, découverts en compte, prêts à la consommation, etc.
+        </blockquote>
+        <a href="https://fr.wikipedia.org/wiki/Usure_%28finance%29#L.C3.A9gislation_.28France.29" target="_blank">Wikipédia - L'usure</a>
+        <br />
+        <a href="https://www.banque-france.fr/economie-et-statistiques/changes-et-taux/taux-dusure.html" target="_blank">Banque de France - Les taux d'usure</a>
+    </p>
+}
+
+
+@section styles
+{
+    @Styles.Render("~/Content/styleSimu")
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/simu")
+
+    <script language="javascript">
+
+        //Apport
+        minValues[APPORT] = @SessionManager.MinApport;
+        maxValues[APPORT] = @SessionManager.MaxApport;
+        _values[APPORT] = minValues[APPORT];
+
+        //Mensualite
+        minValues[MENSUALITE] = @SessionManager.MinMensualite;
+        maxValues[MENSUALITE] = @SessionManager.MaxMensualite;
+        _values[MENSUALITE] = minValues[MENSUALITE];
+
+        //Durée
+        minValues[DUREE] = @SessionManager.MinDuree;
+        maxValues[DUREE] = @SessionManager.MaxDuree;
+        _values[DUREE] = @Model.Duree;
+        SetCursor(DUREE);
+
+        //Taux
+        minValues[TAUX] = @SessionManager.MinTaux;
+        maxValues[TAUX] = @SessionManager.MaxTaux;
+        _values[TAUX] = @Model.Taux;
+        SetCursor(TAUX);
+
+
+        //Emprunt
+        minValues[EMPRUNT] = @SessionManager.MinEmprunt;
+        maxValues[EMPRUNT] = @SessionManager.MaxEmprunt;
+        _values[EMPRUNT] = @Model.Emprunt;
+        var _amoTab = '';
+        SetCursor(EMPRUNT);
+
+        //Total
+        minValues[TOTAL] = @SessionManager.MinTotal;
+        maxValues[TOTAL] = @SessionManager.MaxTotal;
+        _values[TOTAL] = @Model.Total;
+        SetCursor(TOTAL);
+
+        //Frais de notaire
+        var _fraisNotaire = 0;
+
+        //Montant du bien
+        minValues[MONTANTBIEN] = @SessionManager.MinMontantBien;
+        maxValues[MONTANTBIEN] = @SessionManager.MaxMontantBien;
+        _values[MONTANTBIEN] = @Model.MontantBien;
+        SetCursor(MONTANTBIEN);
+
+    </script>
+
+
+}
+
+
+
+
